@@ -1,0 +1,3 @@
+﻿1>------ Build started: Project: Win App Project, Configuration: Debug Any CPU ------
+1>  Win App Project -> C:\Users\Mohamad\Documents\Visual Studio 2015\Projects\Win App Project\Win App Project\bin\Debug\Win App Project.exe
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========

@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_ClinicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Doctors">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Family" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NatinalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Major" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Degree" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BirthDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tbl_JoinDoctorAndSectionAndService" Relationship="Self.FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Doctors1" FromRole="Tbl_Doctors" ToRole="Tbl_JoinDoctorAndSectionAndService" />
+  </EntityType>
+  <EntityType Name="Tbl_JoinDoctorAndSectionAndService">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdDoctors" Type="Int32" />
+    <Property Name="IdSection" Type="Int32" />
+    <Property Name="IdService" Type="Int32" />
+    <NavigationProperty Name="Tbl_Doctors" Relationship="Self.FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Doctors1" FromRole="Tbl_JoinDoctorAndSectionAndService" ToRole="Tbl_Doctors" />
+    <NavigationProperty Name="Tbl_Section" Relationship="Self.FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Section1" FromRole="Tbl_JoinDoctorAndSectionAndService" ToRole="Tbl_Section" />
+    <NavigationProperty Name="Tbl_Service" Relationship="Self.FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Service1" FromRole="Tbl_JoinDoctorAndSectionAndService" ToRole="Tbl_Service" />
+    <NavigationProperty Name="Tbl_VisitTime" Relationship="Self.FK_Tbl_VisitTime_Tbl_JoinDoctorAndSectionAndService1" FromRole="Tbl_JoinDoctorAndSectionAndService" ToRole="Tbl_VisitTime" />
+  </EntityType>
+  <EntityType Name="Tbl_Logins">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Pass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tbl_Roles" Relationship="Self.FK_Logins_Roles" FromRole="Tbl_Logins" ToRole="Tbl_Roles" />
+    <NavigationProperty Name="Tbl_Users" Relationship="Self.FK_Logins_Users" FromRole="Tbl_Logins" ToRole="Tbl_Users" />
+  </EntityType>
+  <EntityType Name="Tbl_Patient">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Family" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NatinalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BirthDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tbl_VisitTime" Relationship="Self.FK_Tbl_VisitTime_Tbl_Patient1" FromRole="Tbl_Patient" ToRole="Tbl_VisitTime" />
+  </EntityType>
+  <EntityType Name="Tbl_Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Titel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tbl_Logins" Relationship="Self.FK_Logins_Roles" FromRole="Tbl_Roles" ToRole="Tbl_Logins" />
+  </EntityType>
+  <EntityType Name="Tbl_Section">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SecName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NumVisitRoom" Type="Int32" />
+    <Property Name="NumSurgeryRoom" Type="Int32" />
+    <Property Name="NumBed" Type="Int32" />
+    <NavigationProperty Name="Tbl_JoinDoctorAndSectionAndService" Relationship="Self.FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Section1" FromRole="Tbl_Section" ToRole="Tbl_JoinDoctorAndSectionAndService" />
+  </EntityType>
+  <EntityType Name="Tbl_Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Major" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tbl_JoinDoctorAndSectionAndService" Relationship="Self.FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Service1" FromRole="Tbl_Service" ToRole="Tbl_JoinDoctorAndSectionAndService" />
+  </EntityType>
+  <EntityType Name="Tbl_Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Family" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NatinalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tbl_Logins" Relationship="Self.FK_Logins_Users" FromRole="Tbl_Users" ToRole="Tbl_Logins" />
+  </EntityType>
+  <EntityType Name="Tbl_VisitTime">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdPation" Type="Int32" />
+    <Property Name="IdJoinDocAndSecAndServ" Type="Int32" />
+    <Property Name="EnterviewDate" Type="DateTime" Precision="0" />
+    <Property Name="VisitDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Tbl_JoinDoctorAndSectionAndService" Relationship="Self.FK_Tbl_VisitTime_Tbl_JoinDoctorAndSectionAndService1" FromRole="Tbl_VisitTime" ToRole="Tbl_JoinDoctorAndSectionAndService" />
+    <NavigationProperty Name="Tbl_Patient" Relationship="Self.FK_Tbl_VisitTime_Tbl_Patient1" FromRole="Tbl_VisitTime" ToRole="Tbl_Patient" />
+  </EntityType>
+  <EntityType Name="Viw_Join">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Family" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SecName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Viw_VisitTime">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Family" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DocterFaamily" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SecName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EnterviewDate" Type="DateTime" Precision="0" />
+    <Property Name="VisitDate" Type="DateTime" Precision="0" />
+  </EntityType>
+  <Association Name="FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Doctors1">
+    <End Role="Tbl_Doctors" Type="Self.Tbl_Doctors" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tbl_JoinDoctorAndSectionAndService" Type="Self.Tbl_JoinDoctorAndSectionAndService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Doctors">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Tbl_JoinDoctorAndSectionAndService">
+        <PropertyRef Name="IdDoctors" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Section1">
+    <End Role="Tbl_Section" Type="Self.Tbl_Section" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tbl_JoinDoctorAndSectionAndService" Type="Self.Tbl_JoinDoctorAndSectionAndService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Section">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Tbl_JoinDoctorAndSectionAndService">
+        <PropertyRef Name="IdSection" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Service1">
+    <End Role="Tbl_Service" Type="Self.Tbl_Service" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tbl_JoinDoctorAndSectionAndService" Type="Self.Tbl_JoinDoctorAndSectionAndService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Service">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Tbl_JoinDoctorAndSectionAndService">
+        <PropertyRef Name="IdService" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_VisitTime_Tbl_JoinDoctorAndSectionAndService1">
+    <End Role="Tbl_JoinDoctorAndSectionAndService" Type="Self.Tbl_JoinDoctorAndSectionAndService" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tbl_VisitTime" Type="Self.Tbl_VisitTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_JoinDoctorAndSectionAndService">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Tbl_VisitTime">
+        <PropertyRef Name="IdJoinDocAndSecAndServ" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Logins_Roles">
+    <End Role="Tbl_Roles" Type="Self.Tbl_Roles" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tbl_Logins" Type="Self.Tbl_Logins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tbl_Logins">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Logins_Users">
+    <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tbl_Logins" Type="Self.Tbl_Logins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tbl_Logins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_VisitTime_Tbl_Patient1">
+    <End Role="Tbl_Patient" Type="Self.Tbl_Patient" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tbl_VisitTime" Type="Self.Tbl_VisitTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Patient">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Tbl_VisitTime">
+        <PropertyRef Name="IdPation" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_ClinicEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Tbl_Doctors" EntityType="Self.Tbl_Doctors" />
+    <EntitySet Name="Tbl_JoinDoctorAndSectionAndService" EntityType="Self.Tbl_JoinDoctorAndSectionAndService" />
+    <EntitySet Name="Tbl_Logins" EntityType="Self.Tbl_Logins" />
+    <EntitySet Name="Tbl_Patient" EntityType="Self.Tbl_Patient" />
+    <EntitySet Name="Tbl_Roles" EntityType="Self.Tbl_Roles" />
+    <EntitySet Name="Tbl_Section" EntityType="Self.Tbl_Section" />
+    <EntitySet Name="Tbl_Service" EntityType="Self.Tbl_Service" />
+    <EntitySet Name="Tbl_Users" EntityType="Self.Tbl_Users" />
+    <EntitySet Name="Tbl_VisitTime" EntityType="Self.Tbl_VisitTime" />
+    <EntitySet Name="Viw_Join" EntityType="Self.Viw_Join" />
+    <EntitySet Name="Viw_VisitTime" EntityType="Self.Viw_VisitTime" />
+    <AssociationSet Name="FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Doctors1" Association="Self.FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Doctors1">
+      <End Role="Tbl_Doctors" EntitySet="Tbl_Doctors" />
+      <End Role="Tbl_JoinDoctorAndSectionAndService" EntitySet="Tbl_JoinDoctorAndSectionAndService" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Section1" Association="Self.FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Section1">
+      <End Role="Tbl_Section" EntitySet="Tbl_Section" />
+      <End Role="Tbl_JoinDoctorAndSectionAndService" EntitySet="Tbl_JoinDoctorAndSectionAndService" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Service1" Association="Self.FK_Tbl_JoinDoctorAndSectionAndService_Tbl_Service1">
+      <End Role="Tbl_Service" EntitySet="Tbl_Service" />
+      <End Role="Tbl_JoinDoctorAndSectionAndService" EntitySet="Tbl_JoinDoctorAndSectionAndService" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_VisitTime_Tbl_JoinDoctorAndSectionAndService1" Association="Self.FK_Tbl_VisitTime_Tbl_JoinDoctorAndSectionAndService1">
+      <End Role="Tbl_JoinDoctorAndSectionAndService" EntitySet="Tbl_JoinDoctorAndSectionAndService" />
+      <End Role="Tbl_VisitTime" EntitySet="Tbl_VisitTime" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Logins_Roles" Association="Self.FK_Logins_Roles">
+      <End Role="Tbl_Roles" EntitySet="Tbl_Roles" />
+      <End Role="Tbl_Logins" EntitySet="Tbl_Logins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Logins_Users" Association="Self.FK_Logins_Users">
+      <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+      <End Role="Tbl_Logins" EntitySet="Tbl_Logins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_VisitTime_Tbl_Patient1" Association="Self.FK_Tbl_VisitTime_Tbl_Patient1">
+      <End Role="Tbl_Patient" EntitySet="Tbl_Patient" />
+      <End Role="Tbl_VisitTime" EntitySet="Tbl_VisitTime" />
+    </AssociationSet>
+    <FunctionImport Name="Del_Doctor">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Del_Join">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Del_pation">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Del_Section">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Del_Service">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Del_VisitTime">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_CountOfPationtGroupServiceGroupDate" ReturnType="Collection(DB_ClinicModel.Sp_CountOfPationtGroupServiceGroupDate_Result)" />
+    <FunctionImport Name="Sp_CountOfPationtGroupServiceGroupDatebyDate" ReturnType="Collection(DB_ClinicModel.Sp_CountOfPationtGroupServiceGroupDatebyDate_Result)">
+      <Parameter Name="Date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_GetDoctorSectionService" ReturnType="Collection(DB_ClinicModel.Sp_GetDoctorSectionService_Result)" />
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(DB_ClinicModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(DB_ClinicModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_ListOfPationtInSection" ReturnType="Collection(DB_ClinicModel.Sp_ListOfPationtInSection_Result)">
+      <Parameter Name="IdSection" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_ListOfPationtInService" ReturnType="Collection(DB_ClinicModel.Sp_ListOfPationtInService_Result)">
+      <Parameter Name="IdService" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="Sp_CountOfPationtGroupServiceGroupDate_Result">
+    <Property Type="DateTime" Name="VisitDate" Nullable="true" />
+    <Property Type="String" Name="ServiceName" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="CountOfPationt" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Sp_CountOfPationtGroupServiceGroupDatebyDate_Result">
+    <Property Type="DateTime" Name="VisitDate" Nullable="true" />
+    <Property Type="String" Name="ServiceName" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="CountOfPationt" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Sp_GetDoctorSectionService_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="DocSecServ" Nullable="true" MaxLength="203" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Sp_ListOfPationtInSection_Result">
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Family" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ServiceName" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Sp_ListOfPationtInService_Result">
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Family" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ServiceName" Nullable="true" MaxLength="50" />
+  </ComplexType>
+</Schema>
